@@ -1,8 +1,63 @@
 {% extends 'base.html' %}
 {% block content %}
-<form method="POST" novalidate>
-    <input name="name" placeholder="Enter your name">
-    <input type="submit" value="Register">
-</form>
-<p>Hello {{ name | safe }}</p>
+    <h1>Register</h1>
+    {% if success %}
+        <div style="padding:10px;border:1px solid #4caf50;background:#e8f5e9;margin-bottom:1rem;">
+            <strong>Registration successful</strong>
+            <p>Welcome, {{ username }}.</p>
+            {% if bio %}
+                <h4>Your bio/comment</h4>
+                <p>{{ bio }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <form method="POST" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div>
+            {{ form.userName.label }}<br>
+            {{ form.userName(size=32) }}<br>
+            {% for err in form.userName.errors %}
+                <span style="color:darkred">{{ err }}</span><br>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ form.email.label }}<br>
+            {{ form.email(size=40) }}<br>
+            {% for err in form.email.errors %}
+                <span style="color:darkred">{{ err }}</span><br>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}<br>
+            {% for err in form.password.errors %}
+                <span style="color:darkred">{{ err }}</span><br>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ form.confirmPassword.label }}<br>
+            {{ form.confirmPassword(size=32) }}<br>
+            {% for err in form.confirmPassword.errors %}
+                <span style="color:darkred">{{ err }}</span><br>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ form.bioOrComment.label }}<br>
+            {{ form.bioOrComment(rows=4, cols=50) }}<br>
+            {% for err in form.bioOrComment.errors %}
+                <span style="color:darkred">{{ err }}</span><br>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ form.submit() }}
+        </div>
+    </form>
+
 {% endblock %}
